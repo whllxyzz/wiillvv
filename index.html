@@ -4,228 +4,442 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>NALWA — 6 Juni 2026</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-:root{--bg:#0a0a0a; --border:rgba(255, 120, 160, 0.4); --text:#ffffff; --accent:#ff99cc}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-body{
+body {
+    position: relative;
     background: url('https://i.ibb.co.com/fGFZStYM/10414642883962226.jpg') no-repeat center center fixed;
     background-size: cover;
-    color:var(--text);
-    font-family:'Inter',sans-serif;
-    min-height:100vh;
-}
-
-/* Wrapper utama - tidak pakai blur, hanya sebagai pembatas */
-.wrap{
-    max-width:680px;
-    margin:0 auto;
-    padding:60px 24px 100px;
+    font-family: 'Inter', sans-serif;
     min-height: 100vh;
-    position: relative;
-    z-index: 1;
+    color: #fff;
 }
 
-/* KUPU-KUPU FIXED - tidak ikut scroll */
-.butterfly-fixed {
+/* Overlay untuk menurunkan kecerahan background */
+body::before {
+    content: '';
     position: fixed;
-    right: 5%;
-    top: 22%;
-    width: clamp(80px, 15vw, 130px);
-    height: auto;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.15);
     pointer-events: none;
-    z-index: 10;
-    filter: drop-shadow(0 2px 6px rgba(255,105,180,0.3));
-    animation: float 4s ease-in-out infinite, wingFlap 3s infinite;
+    z-index: 0;
 }
 
-@keyframes float {
-    0% { transform: translateY(0px) rotate(0deg); }
-    50% { transform: translateY(-6px) rotate(2deg); }
-    100% { transform: translateY(0px) rotate(0deg); }
-}
-@keyframes wingFlap {
-    0% { transform: scaleX(1); }
-    50% { transform: scaleX(0.96); }
-    100% { transform: scaleX(1); }
+/* Kontainer utama */
+.wrap {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+    position: relative;
+    z-index: 2;
 }
 
-@media (max-width: 640px) {
-    .butterfly-fixed { right: 2%; top: 15%; width: 65px; }
-}
-@media (min-width: 1200px) {
-    .butterfly-fixed { right: 12%; top: 20%; width: 140px; }
-}
-
-/* HEADER - glassmorphism transparan */
-.header{
-    text-align:center;
-    padding:40px 20px 36px;
-    margin-bottom: 20px;
-    background: rgba(255, 220, 240, 0.4);
+/* Efek glass transparan */
+.glass-card {
+    background: rgba(255, 220, 240, 0.45);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    border-radius: 32px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    border-radius: 36px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-.label{font-size:11px;letter-spacing:4px;color:#ffc0e0;text-transform:uppercase;margin-bottom:20px;text-shadow:0 0 6px #ff66aa;font-weight:500}
-.name{font-family:'Playfair Display',serif;font-size:clamp(52px,12vw,88px);font-weight:700;line-height:.95;letter-spacing:-2px;color:#fff;text-shadow:0 0 12px #ff66aa, 0 2px 4px rgba(255,105,180,0.5);}
-.name em{font-style:italic;color:var(--accent);text-shadow:0 0 10px #ff99cc;}
-.date-row{display:flex;align-items:center;justify-content:center;gap:16px;margin-top:24px;font-size:13px;color:#ffe0f0;letter-spacing:2px;text-transform:uppercase;text-shadow:0 0 5px #ff66aa;}
-.dot-sep{width:3px;height:3px;border-radius:50%;background:var(--accent);box-shadow:0 0 6px #ff99cc;}
 
-/* Countdown - glassmorphism transparan */
-.countdown{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:12px;
-    margin:40px 0;
+.glass-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
 }
-.countdown-item{
-    background: rgba(255, 220, 240, 0.4);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border-radius: 24px;
-    padding: 20px 8px;
+
+/* Header */
+.header {
     text-align: center;
-    border: 1px solid rgba(255,255,255,0.2);
-    transition: all 0.3s ease;
-    animation: borderPulse 2s infinite ease-in-out;
+    padding: 48px 24px 44px;
+    margin-bottom: 32px;
+    background: rgba(255, 220, 240, 0.5);
+    backdrop-filter: blur(14px);
+    border-radius: 48px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
 }
-@keyframes borderPulse {
-    0% { border-color: rgba(255, 153, 204, 0.4); box-shadow: 0 0 0px rgba(255,153,204,0);}
-    50% { border-color: rgba(255, 153, 204, 0.9); box-shadow: 0 0 12px rgba(255,153,204,0.5);}
-    100% { border-color: rgba(255, 153, 204, 0.4); box-shadow: 0 0 0px rgba(255,153,204,0);}
-}
-.cc-n{font-family:'Playfair Display',serif;font-size:clamp(36px,8vw,52px);font-weight:800;line-height:1;color:#fff;display:block;text-shadow:0 0 10px #ff66aa;}
-.cc-l{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:#ffe0f0;margin-top:8px;display:block;text-shadow:0 0 5px #ff66aa;font-weight:500;}
 
-/* Progress section - glassmorphism */
-.prog-section{
-    padding:24px 20px;
-    background: rgba(255, 220, 240, 0.4);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+.label {
+    font-size: 11px;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: #ffffff;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    margin-bottom: 20px;
+    font-weight: 500;
+}
+
+.name {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(52px, 14vw, 96px);
+    font-weight: 700;
+    line-height: 0.95;
+    letter-spacing: -2px;
+    color: #ffffff;
+    text-shadow: 0 2px 6px rgba(0,0,0,0.5);
+    -webkit-text-stroke: 0.3px rgba(255,255,255,0.2);
+}
+
+.name em {
+    font-style: italic;
+    color: #fff5fa;
+    text-shadow: 0 2px 5px rgba(0,0,0,0.4);
+}
+
+.date-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 18px;
+    margin-top: 28px;
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #ffffff;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+    font-weight: 500;
+}
+
+.dot-sep {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #ffb7c5;
+    box-shadow: 0 0 4px rgba(255,255,255,0.6);
+}
+
+/* Countdown grid */
+.countdown {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 32px;
+}
+
+.countdown-item {
+    text-align: center;
+    padding: 24px 8px 20px;
+    background: rgba(255, 220, 240, 0.45);
+    backdrop-filter: blur(12px);
     border-radius: 28px;
-    margin: 30px 0;
-    border: 1px solid rgba(255,255,255,0.2);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    transition: all 0.3s;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 }
-.prog-meta{display:flex;justify-content:space-between;font-size:12px;color:#fff;letter-spacing:1px;margin-bottom:12px;text-shadow:0 0 4px #ff66aa;}
-.prog-track{height:5px;background:rgba(255,200,220,0.7);border-radius:10px;overflow:hidden}
-.prog-fill{height:100%;background:var(--accent);width:0%;transition:width 1s cubic-bezier(0.2, 0.9, 0.4, 1.1);position:relative;box-shadow:0 0 6px #ff99cc;border-radius:10px;}
-.prog-fill::after{
-    content:'';
-    position:absolute;
-    top:0;
-    right:0;
-    bottom:0;
-    width:40px;
-    background:linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
-    animation: shimmer 1.5s infinite;
+
+.countdown-item:hover {
+    background: rgba(255, 220, 240, 0.65);
+    transform: scale(1.02);
 }
+
+.cc-n {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(36px, 8vw, 58px);
+    font-weight: 800;
+    color: #ffffff;
+    text-shadow: 0 2px 6px rgba(0,0,0,0.5);
+    line-height: 1;
+    display: block;
+}
+
+.cc-l {
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #ffffff;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+    margin-top: 12px;
+    font-weight: 600;
+}
+
+/* Progress section */
+.prog-section {
+    padding: 24px 28px;
+    margin-bottom: 32px;
+    background: rgba(255, 220, 240, 0.45);
+    backdrop-filter: blur(12px);
+    border-radius: 32px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.prog-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: #ffffff;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+    margin-bottom: 14px;
+    letter-spacing: 1px;
+    font-weight: 500;
+}
+
+.prog-track {
+    height: 6px;
+    background: rgba(255, 200, 220, 0.8);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.prog-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #ff99cc, #ff66aa);
+    border-radius: 10px;
+    box-shadow: 0 0 6px rgba(255,255,255,0.5);
+    transition: width 1s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+    position: relative;
+}
+
+.prog-fill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+    animation: shimmer 1.8s infinite;
+}
+
 @keyframes shimmer {
-    0% { transform: translateX(-100%);}
-    100% { transform: translateX(400%);}
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(200%); }
 }
-.wib{font-size:12px;color:#ffe0f0;letter-spacing:1.5px;margin-top:14px;text-align:right;text-shadow:0 0 4px #ff66aa;}
 
-/* Lagu favorit section - glassmorphism */
-.section{
-    padding: 32px 20px;
+.wib {
+    font-size: 12px;
+    text-align: right;
+    margin-top: 14px;
+    color: #ffffff;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+    letter-spacing: 1px;
+}
+
+/* Lagu favorit */
+.song-section {
+    padding: 32px 28px;
+    margin-bottom: 32px;
+    background: rgba(255, 220, 240, 0.45);
+    backdrop-filter: blur(12px);
+    border-radius: 32px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.sec-label {
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: #ffffff;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+    text-align: center;
+    margin-bottom: 24px;
+    font-weight: 500;
+}
+
+iframe {
+    border-radius: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+/* Footer */
+.footer {
+    text-align: center;
+    padding: 18px 24px;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #ffffff;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.5);
     background: rgba(255, 220, 240, 0.4);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border-radius: 28px;
-    margin: 30px 0;
-    border: 1px solid rgba(255,255,255,0.2);
-}
-.sec-label{font-size:11px;letter-spacing:4px;text-transform:uppercase;color:#ffc0e0;margin-bottom:24px;text-align:center;text-shadow:0 0 4px #ff66aa;}
-
-.footer{
-    text-align:center;
-    margin-top: 40px;
-    padding: 20px;
-    font-size:11px;
-    color:#ffc0e0;
-    letter-spacing:2px;
-    text-transform:uppercase;
-    text-shadow:0 0 4px #ff66aa;
-    background: rgba(255, 220, 240, 0.3);
-    backdrop-filter: blur(6px);
+    backdrop-filter: blur(8px);
     border-radius: 40px;
+    margin-top: 20px;
+}
+
+/* ============ KUPU-KUPU (MULTIPLE) ============ */
+.butterfly {
+    position: fixed;
+    pointer-events: none;
+    z-index: 20;
+    filter: drop-shadow(0 4px 12px rgba(0,0,0,0.2));
+    transition: filter 0.3s;
+}
+
+/* Masing-masing kupu-kupu dengan posisi, ukuran, animasi berbeda */
+.butterfly-1 {
+    right: 4%;
+    top: 18%;
+    width: clamp(70px, 12vw, 130px);
+    animation: float1 5s ease-in-out infinite, gentleWing 3s infinite;
+}
+.butterfly-2 {
+    left: 3%;
+    bottom: 15%;
+    width: clamp(55px, 10vw, 100px);
+    animation: float2 6s ease-in-out infinite, gentleWing 2.5s infinite;
+    opacity: 0.85;
+}
+.butterfly-3 {
+    right: 8%;
+    bottom: 20%;
+    width: clamp(50px, 9vw, 90px);
+    animation: float3 4.5s ease-in-out infinite, gentleWing 3.5s infinite;
+    opacity: 0.8;
+}
+.butterfly-4 {
+    left: 6%;
+    top: 60%;
+    width: clamp(60px, 11vw, 110px);
+    animation: float4 5.5s ease-in-out infinite, gentleWing 2.8s infinite;
+    opacity: 0.75;
+}
+
+/* Animasi terbang berbeda */
+@keyframes float1 {
+    0% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-12px) rotate(4deg); }
+    100% { transform: translateY(0px) rotate(0deg); }
+}
+@keyframes float2 {
+    0% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(8px) rotate(-3deg); }
+    100% { transform: translateY(0px) rotate(0deg); }
+}
+@keyframes float3 {
+    0% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-6px) rotate(5deg); }
+    100% { transform: translateY(0px) rotate(0deg); }
+}
+@keyframes float4 {
+    0% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(10px) rotate(-2deg); }
+    100% { transform: translateY(0px) rotate(0deg); }
+}
+@keyframes gentleWing {
+    0%, 100% { transform: scaleX(1); }
+    50% { transform: scaleX(0.92); }
+}
+
+/* Responsif: kecilkan kupu-kupu di HP */
+@media (max-width: 640px) {
+    .butterfly-1 { right: 2%; top: 10%; width: 55px; }
+    .butterfly-2 { left: 2%; bottom: 10%; width: 45px; }
+    .butterfly-3 { right: 3%; bottom: 15%; width: 40px; }
+    .butterfly-4 { left: 3%; top: 55%; width: 45px; }
 }
 </style>
 </head>
 <body>
 
-<img class="butterfly-fixed" src="https://i.ibb.co.com/k2kGr47W/Pink-Butterfly-Aesthetic-Background-removebg-preview.png" alt="Kupu-kupu pink">
+<!-- Banyak kupu-kupu hinggap di berbagai sudut -->
+<img class="butterfly butterfly-1" src="https://i.ibb.co.com/k2kGr47W/Pink-Butterfly-Aesthetic-Background-removebg-preview.png" alt="Kupu-kupu pink 1">
+<img class="butterfly butterfly-2" src="https://i.ibb.co.com/k2kGr47W/Pink-Butterfly-Aesthetic-Background-removebg-preview.png" alt="Kupu-kupu pink 2">
+<img class="butterfly butterfly-3" src="https://i.ibb.co.com/k2kGr47W/Pink-Butterfly-Aesthetic-Background-removebg-preview.png" alt="Kupu-kupu pink 3">
+<img class="butterfly butterfly-4" src="https://i.ibb.co.com/k2kGr47W/Pink-Butterfly-Aesthetic-Background-removebg-preview.png" alt="Kupu-kupu pink 4">
 
 <div class="wrap">
-  <div class="header">
-    <div class="label">Birthday Countdown</div>
-    <div class="name">NAL<em>WA</em></div>
-    <div class="date-row">
-      <span>Sabtu</span><div class="dot-sep"></div>
-      <span>6 Juni 2026</span><div class="dot-sep"></div>
-      <span>Gemini ♊</span>
+    <div class="header">
+        <div class="label">Birthday Countdown</div>
+        <div class="name">NAL<em>WA</em></div>
+        <div class="date-row">
+            <span>Sabtu</span>
+            <div class="dot-sep"></div>
+            <span>6 Juni 2026</span>
+            <div class="dot-sep"></div>
+            <span>Gemini ♊</span>
+        </div>
     </div>
-  </div>
 
-  <div class="countdown">
-    <div class="countdown-item"><span class="cc-n" id="cd">--</span><span class="cc-l">Hari</span></div>
-    <div class="countdown-item"><span class="cc-n" id="ch">--</span><span class="cc-l">Jam</span></div>
-    <div class="countdown-item"><span class="cc-n" id="cm">--</span><span class="cc-l">Menit</span></div>
-    <div class="countdown-item"><span class="cc-n" id="cs">--</span><span class="cc-l">Detik</span></div>
-  </div>
-
-  <div class="prog-section">
-    <div class="prog-meta"><span>1 Jan 2026</span><span id="ppct">0%</span></div>
-    <div class="prog-track"><div class="prog-fill" id="pf" style="width:0%"></div></div>
-    <div class="wib" id="wib">WIB --:--:--</div>
-  </div>
-
-  <div class="section">
-    <div class="sec-label">Lagu Favorit</div>
-    <div style="margin-top: 20px;">
-       <iframe style="border-radius:16px" src="https://open.spotify.com/embed/track/7gqdZpe7MlTLA59viClLoY?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+    <div class="countdown">
+        <div class="countdown-item">
+            <span class="cc-n" id="cd">--</span>
+            <span class="cc-l">Hari</span>
+        </div>
+        <div class="countdown-item">
+            <span class="cc-n" id="ch">--</span>
+            <span class="cc-l">Jam</span>
+        </div>
+        <div class="countdown-item">
+            <span class="cc-n" id="cm">--</span>
+            <span class="cc-l">Menit</span>
+        </div>
+        <div class="countdown-item">
+            <span class="cc-n" id="cs">--</span>
+            <span class="cc-l">Detik</span>
+        </div>
     </div>
-  </div>
 
-  <div class="footer">NALWA — 6 Juni 2026</div>
+    <div class="prog-section">
+        <div class="prog-meta">
+            <span>1 Jan 2026</span>
+            <span id="ppct">0%</span>
+        </div>
+        <div class="prog-track">
+            <div class="prog-fill" id="pf" style="width:0%"></div>
+        </div>
+        <div class="wib" id="wib">WIB --:--:--</div>
+    </div>
+
+    <div class="song-section">
+        <div class="sec-label">Lagu Favorit</div>
+        <iframe style="border-radius:20px" src="https://open.spotify.com/embed/track/7gqdZpe7MlTLA59viClLoY?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+    </div>
+
+    <div class="footer">
+        NALWA — 6 Juni 2026
+    </div>
 </div>
 
 <script>
-function pad(n){return String(n).padStart(2,'0')}
-function tick(){
-  const now=new Date();
-  const wib=new Date(now.getTime()+7*3600000);
-  document.getElementById('wib').textContent=`WIB ${pad(wib.getUTCHours())}:${pad(wib.getUTCMinutes())}:${pad(wib.getUTCSeconds())}`;
-  const nowWIB = new Date(now.getTime() + 7*3600000);
-  const targetWIB = new Date(Date.UTC(2026, 5, 6, 0, 0, 0));
-  const diff = targetWIB - nowWIB;
-  const t = Math.floor(diff/1000);
-  if(t>=0){
-    document.getElementById('cd').textContent=pad(Math.floor(t/86400));
-    document.getElementById('ch').textContent=pad(Math.floor((t%86400)/3600));
-    document.getElementById('cm').textContent=pad(Math.floor((t%3600)/60));
-    document.getElementById('cs').textContent=pad(t%60);
-  } else {
-    document.getElementById('cd').textContent="00";
-    document.getElementById('ch').textContent="00";
-    document.getElementById('cm').textContent="00";
-    document.getElementById('cs').textContent="00";
-  }
-  const start=new Date(2026,0,1);
-  const range=targetWIB-start;
-  const nowMS = nowWIB;
-  let pct = ((nowMS - start) / range) * 100;
-  pct = Math.min(100, Math.max(0, pct));
-  document.getElementById('pf').style.width=pct.toFixed(2)+'%';
-  document.getElementById('ppct').textContent=pct.toFixed(1)+'%';
+function pad(n) {
+    return String(n).padStart(2, '0');
 }
-tick();setInterval(tick,1000);
+
+function tick() {
+    const now = new Date();
+    const wib = new Date(now.getTime() + 7 * 3600000);
+    document.getElementById('wib').textContent = `WIB ${pad(wib.getUTCHours())}:${pad(wib.getUTCMinutes())}:${pad(wib.getUTCSeconds())}`;
+
+    const nowWIB = new Date(now.getTime() + 7 * 3600000);
+    const targetWIB = new Date(Date.UTC(2026, 5, 6, 0, 0, 0));
+    const diff = targetWIB - nowWIB;
+    const t = Math.floor(diff / 1000);
+
+    if (t >= 0) {
+        document.getElementById('cd').textContent = pad(Math.floor(t / 86400));
+        document.getElementById('ch').textContent = pad(Math.floor((t % 86400) / 3600));
+        document.getElementById('cm').textContent = pad(Math.floor((t % 3600) / 60));
+        document.getElementById('cs').textContent = pad(t % 60);
+    } else {
+        document.getElementById('cd').textContent = "00";
+        document.getElementById('ch').textContent = "00";
+        document.getElementById('cm').textContent = "00";
+        document.getElementById('cs').textContent = "00";
+    }
+
+    const start = new Date(2026, 0, 1);
+    const range = targetWIB - start;
+    const nowMS = nowWIB;
+    let pct = ((nowMS - start) / range) * 100;
+    pct = Math.min(100, Math.max(0, pct));
+    document.getElementById('pf').style.width = pct.toFixed(2) + '%';
+    document.getElementById('ppct').textContent = pct.toFixed(1) + '%';
+}
+
+tick();
+setInterval(tick, 1000);
 </script>
 </body>
 </html>
