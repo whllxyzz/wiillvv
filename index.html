@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Wilka — 1 Juli 2026</title>
+<title>NALWA — 6 Juni 2026</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
@@ -38,15 +38,37 @@ body{
 .date-row{display:flex;align-items:center;justify-content:center;gap:16px;margin-top:24px;font-size:12px;color:var(--muted);letter-spacing:2px;text-transform:uppercase}
 .dot-sep{width:3px;height:3px;border-radius:50%;background:var(--accent)}
 
-.countdown{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);margin:48px 0}
+/* Countdown dengan efek garis berdenyut */
+.countdown{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);margin:48px 0;position:relative;animation: borderPulse 2s infinite ease-in-out;}
+@keyframes borderPulse {
+    0% { border-color: rgba(201, 169, 110, 0.3); box-shadow: 0 0 0px rgba(201,169,110,0);}
+    50% { border-color: rgba(201, 169, 110, 0.9); box-shadow: 0 0 12px rgba(201,169,110,0.6);}
+    100% { border-color: rgba(201, 169, 110, 0.3); box-shadow: 0 0 0px rgba(201,169,110,0);}
+}
 .cc{background:rgba(0,0,0,0.2);padding:28px 12px 20px;text-align:center}
 .cc-n{font-family:'Playfair Display',serif;font-size:clamp(36px,8vw,56px);font-weight:700;line-height:1;color:var(--text);display:block}
 .cc-l{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-top:8px;display:block}
 
+/* Progress section dengan garis progress yang lebih hidup */
 .prog-section{padding:32px 0;border-bottom:1px solid var(--border)}
 .prog-meta{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);letter-spacing:1px;margin-bottom:12px}
-.prog-track{height:1px;background:var(--border)}
-.prog-fill{height:1px;background:var(--accent);transition:width 1s ease}
+.prog-track{height:2px;background:var(--border);border-radius:2px;overflow:hidden}
+.prog-fill{height:100%;background:var(--accent);width:0%;transition:width 1s cubic-bezier(0.2, 0.9, 0.4, 1.1);position:relative;box-shadow:0 0 6px var(--accent);}
+/* Efek garis berkedip pada progress fill */
+.prog-fill::after{
+    content:'';
+    position:absolute;
+    top:0;
+    right:0;
+    bottom:0;
+    width:30px;
+    background:linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+    animation: shimmer 1.5s infinite;
+}
+@keyframes shimmer {
+    0% { transform: translateX(-100%);}
+    100% { transform: translateX(400%);}
+}
 .wib{font-size:11px;color:var(--muted);letter-spacing:1.5px;margin-top:14px;text-align:right}
 
 .section{padding:48px 0;border-bottom:1px solid var(--border)}
@@ -60,11 +82,11 @@ body{
 <div class="wrap">
   <div class="header">
     <div class="label">Birthday Countdown</div>
-    <div class="name">Wil<em>ka</em></div>
+    <div class="name">NAL<em>WA</em></div>
     <div class="date-row">
-      <span>Selasa</span><div class="dot-sep"></div>
-      <span>1 Juli 2026</span><div class="dot-sep"></div>
-      <span>Cancer ♋</span>
+      <span>Sabtu</span><div class="dot-sep"></div>
+      <span>6 Juni 2026</span><div class="dot-sep"></div>
+      <span>Gemini ♊</span>
     </div>
   </div>
 
@@ -84,28 +106,45 @@ body{
   <div class="section">
     <div class="sec-label">Lagu Favorit</div>
     <div style="margin-top: 20px;">
-       <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/1hjRhYpWyqDpPahmSlUTlc?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+       <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/7gqdZpe7MlTLA59viClLoY?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
     </div>
   </div>
 
-  <div class="footer">Wilka — 1 Juli 2026</div>
+  <div class="footer">NALWA — 6 Juni 2026</div>
 </div>
 
 <script>
 function pad(n){return String(n).padStart(2,'0')}
 function tick(){
   const now=new Date();
+  // WIB = UTC+7
   const wib=new Date(now.getTime()+7*3600000);
   document.getElementById('wib').textContent=`WIB ${pad(wib.getUTCHours())}:${pad(wib.getUTCMinutes())}:${pad(wib.getUTCSeconds())}`;
-  const target=new Date(2026,6,1,0,0,0);
-  const diff=target-now;
-  const t=Math.floor(diff/1000);
-  document.getElementById('cd').textContent=pad(Math.floor(t/86400));
-  document.getElementById('ch').textContent=pad(Math.floor((t%86400)/3600));
-  document.getElementById('cm').textContent=pad(Math.floor((t%3600)/60));
-  document.getElementById('cs').textContent=pad(t%60);
-  const start=new Date(2026,0,1),range=target-start;
-  const pct=Math.min(100,Math.max(0,(now-start)/range*100));
+  // Target: 6 Juni 2026, jam 00:00 WIB = UTC+7 => UTC timestamp: Date.UTC(2026,5,6,0,0,0) - 7*3600000? lebih mudah: buat tanggal lokal lalu kurangi offset
+  // Agar akurat dengan jam WIB, kita gunakan Date.UTC untuk 6 Juni 2026 jam 00:00 WIB = 2026-06-05T17:00:00Z
+  const targetUTC = Date.UTC(2026, 5, 6, 0, 0, 0) - (7*3600000); // karena kita simpan sebagai waktu lokal WIB, tapi new Date() di browser lokal, kita hitung diff dengan target waktu WIB
+  // Cara mudah: buat targetDate di WIB
+  const target = new Date(Date.UTC(2026, 5, 6, 0, 0, 0)); // UTC midnight, lalu konversi ke waktu lokal user? lebih aman gunakan perbedaan dengan now WIB
+  const nowWIB = new Date(now.getTime() + 7*3600000);
+  const targetWIB = new Date(Date.UTC(2026, 5, 6, 0, 0, 0));
+  const diff = targetWIB - nowWIB;
+  const t = Math.floor(diff/1000);
+  if(t>=0){
+    document.getElementById('cd').textContent=pad(Math.floor(t/86400));
+    document.getElementById('ch').textContent=pad(Math.floor((t%86400)/3600));
+    document.getElementById('cm').textContent=pad(Math.floor((t%3600)/60));
+    document.getElementById('cs').textContent=pad(t%60);
+  } else {
+    document.getElementById('cd').textContent="00";
+    document.getElementById('ch').textContent="00";
+    document.getElementById('cm').textContent="00";
+    document.getElementById('cs').textContent="00";
+  }
+  const start=new Date(2026,0,1); // 1 Jan 2026 lokal
+  const range=targetWIB-start; // targetWIB sebagai objek Date, perlu konversi
+  const nowMS = nowWIB;
+  let pct = ((nowMS - start) / range) * 100;
+  pct = Math.min(100, Math.max(0, pct));
   document.getElementById('pf').style.width=pct.toFixed(2)+'%';
   document.getElementById('ppct').textContent=pct.toFixed(1)+'%';
 }
